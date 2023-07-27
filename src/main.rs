@@ -1,24 +1,20 @@
-//https://doc.rust-lang.org/rust-by-example/std_misc/file/read_lines.html
-
-use std::fs::File;
-use std::io::{self, BufRead};
-use std::path::Path;
-
 fn main() {
-    if let Ok(lines) = read_lines("./Day1.txt") {
-        // Consumes the iterator, returns an (Optional) String
-        for line in lines {
-            if let Ok(val) = line {
-                println!("{}", val);
-            }
-        }
-    }
-}
+    // Include/Read the file as a string
+    let file_str = include_str!("./Day1.txt");
+    // String slices (of each line)
+    let lines = file_str.lines();
+    // Parse into a number
+    let values = lines.map(|line| line.parse().unwrap());
+    // Convert into more usable collection of a vector
+    let collection = values.collect::<Vec<u16>>();
+    // Get subslices (pairs) from the collection
+    let pairs = collection.windows(2);
 
-// The output is wrapped in a Result to allow matching on errors
-// Returns an Iterator to the Reader of the lines of the file.
-fn read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>>
-where P: AsRef<Path>, {
-    let file = File::open(filename)?;
-    Ok(io::BufReader::new(file).lines())
+    // Count the occurences of a value being greater than value before it in the collection
+    let mut counter: u16 = 0;
+    for pair in pairs {
+        if pair[1] > pair[0] { counter += 1; }
+    }
+
+    println!("{}",counter);
 }
