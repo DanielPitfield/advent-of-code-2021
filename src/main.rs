@@ -9,11 +9,11 @@ fn main() {
     // Convert into more usable collection of a vector
     .collect();
     
-    part1(values.clone());
-    part2(values.clone());
+    part1(&values);
+    part2(&values);
 }
 
-fn part1(values: Vec<u16>) {
+fn part1(values: &Vec<u16>) {
     // Get subslices (pairs)
     let pairs = values.windows(2);
 
@@ -26,12 +26,12 @@ fn part1(values: Vec<u16>) {
     println!("{}", counter);
 }
 
-fn part2(values: Vec<u16>) {
+fn part2(values: &Vec<u16>) {
     // Get three value sliding windows
     let windows = values.windows(3);
     // Sum together the three values within each window
     let sum_values: Vec<u16> = windows.map(|window| window.iter().sum()).collect();
-    
+
     let pairs = sum_values.windows(2);
 
     let mut counter: u16 = 0;
