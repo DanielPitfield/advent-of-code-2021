@@ -23,7 +23,7 @@ fn part1(values: &Vec<u16>) {
         if pair[1] > pair[0] { counter += 1; }
     }
 
-    println!("{}", counter);
+    println!("Part 1: {counter}");
 }
 
 fn part2(values: &Vec<u16>) {
@@ -39,5 +39,5 @@ fn part2(values: &Vec<u16>) {
         if pair[1] > pair[0] { counter += 1; }
     }
 
-    println!("{}", counter);
+    println!("Part 2: {counter}");
 }
