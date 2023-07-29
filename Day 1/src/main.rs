@@ -1,7 +1,7 @@
 fn main() { 
     let values: Vec<u16> =  
     // Include/Read the file as a string
-    include_str!("./Day1.txt")
+    include_str!("./input.txt")
     // Get string slices (of each line)
     .lines()
     // Parse each line's value to number
