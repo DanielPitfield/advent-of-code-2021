@@ -42,7 +42,7 @@ fn part2(lines: &Vec<&str>) {
         if parts[0] == "forward" { 
             horizontal_position += value;
             // Also now increases depth by aim multiplied by the value
-            depth += (aim * value);
+            depth += aim * value;
         }
         // Increases aim
         else if parts[0] == "down" { aim += value; }
