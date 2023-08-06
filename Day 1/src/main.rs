@@ -1,5 +1,5 @@
-fn main() { 
-    let values: Vec<u16> =  
+fn main() {
+    let values: Vec<u16> =
     // Include/Read the file as a string
     include_str!("./input.txt")
     // Get string slices (of each line)
@@ -8,7 +8,7 @@ fn main() {
     .map(|line| line.parse().unwrap())
     // Convert into more usable collection of a vector
     .collect();
-    
+
     part1(&values);
     part2(&values);
 }
@@ -20,7 +20,9 @@ fn part1(values: &Vec<u16>) {
     // Count the occurences of the second value in the pair being greater than the first value
     let mut counter: u16 = 0;
     for pair in pairs {
-        if pair[1] > pair[0] { counter += 1; }
+        if pair[1] > pair[0] {
+            counter += 1;
+        }
     }
 
     println!("Part 1: {counter}");
@@ -36,7 +38,9 @@ fn part2(values: &Vec<u16>) {
 
     let mut counter: u16 = 0;
     for pair in pairs {
-        if pair[1] > pair[0] { counter += 1; }
+        if pair[1] > pair[0] {
+            counter += 1;
+        }
     }
 
     println!("Part 2: {counter}");
