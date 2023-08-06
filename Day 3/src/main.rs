@@ -15,7 +15,7 @@ fn part1(rows: &Vec<&str>) {
 
     for column_number in 0..(num_columns - 1) {
         // The values/bits for just the currently iterated column
-        let column_values: Vec<&str> = grid.iter().map(|row| row.get(column_number)).collect();
+        let column_values: Vec<&str> = grid.iter().map(|row| row[column_number]).collect();
 
         // More 1 bits than 0 bits?
         if column_values.iter().filter(|&x| x == "1").count() >= column_values.iter().count() / 2 {
