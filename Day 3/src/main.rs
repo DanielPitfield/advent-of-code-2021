@@ -36,32 +36,36 @@ fn main() {
             gamma_binary_string.push_str("1");
             epsilon_binary_string.push_str("0");
 
-            oxygen_generator_grid = oxygen_generator_grid
-                .clone()
-                .into_iter()
-                .filter(|row| row[column_number].to_string() == "1")
-                .collect();
+            if oxygen_generator_grid.len() > 1 {
+                oxygen_generator_grid = oxygen_generator_grid
+                    .drain(..)
+                    .filter(|row| row[column_number].to_string() == "1")
+                    .collect();
+            }
 
-            co2_scrubber_grid = co2_scrubber_grid
-                .clone()
-                .into_iter()
-                .filter(|row| row[column_number].to_string() == "0")
-                .collect();
+            if co2_scrubber_grid.len() > 1 {
+                co2_scrubber_grid = co2_scrubber_grid
+                    .drain(..)
+                    .filter(|row| row[column_number].to_string() == "0")
+                    .collect();
+            }
         } else {
             gamma_binary_string.push_str("0");
             epsilon_binary_string.push_str("1");
 
-            oxygen_generator_grid = oxygen_generator_grid
-                .clone()
-                .into_iter()
-                .filter(|row| row[column_number].to_string() == "0")
-                .collect();
+            if oxygen_generator_grid.len() > 1 {
+                oxygen_generator_grid = oxygen_generator_grid
+                    .drain(..)
+                    .filter(|row| row[column_number].to_string() == "0")
+                    .collect();
+            }
 
-            co2_scrubber_grid = co2_scrubber_grid
-                .clone()
-                .into_iter()
-                .filter(|row| row[column_number].to_string() == "1")
-                .collect();
+            if co2_scrubber_grid.len() > 1 {
+                co2_scrubber_grid = co2_scrubber_grid
+                    .drain(..)
+                    .filter(|row| row[column_number].to_string() == "1")
+                    .collect();
+            }
         }
     }
 
@@ -71,4 +75,16 @@ fn main() {
 
     let power_consumption = gamma_decimal_value * epsilon_decimal_value;
     println!("Part 1: {power_consumption}");
+
+    // The first (and only remaining) vector contains the characters of the binary string(s)
+    let oxygen_generator_binary_string: String = oxygen_generator_grid[0].iter().collect();
+    let co2_scrubbing_binary_string: String = co2_scrubber_grid[0].iter().collect();
+
+    let oxygen_generator_decimal_value =
+        isize::from_str_radix(&oxygen_generator_binary_string, 2).unwrap();
+    let co2_scrubbing_decimal_value =
+        isize::from_str_radix(&co2_scrubbing_binary_string, 2).unwrap();
+
+    let life_support = oxygen_generator_decimal_value * co2_scrubbing_decimal_value;
+    println!("Part 2: {life_support}");
 }
