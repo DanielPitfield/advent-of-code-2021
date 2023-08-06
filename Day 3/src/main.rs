@@ -35,37 +35,67 @@ fn main() {
         if num_one_bits >= num_zero_bits {
             gamma_binary_string.push_str("1");
             epsilon_binary_string.push_str("0");
-
-            if oxygen_generator_grid.len() > 1 {
-                oxygen_generator_grid = oxygen_generator_grid
-                    .drain(..)
-                    .filter(|row| row[column_number].to_string() == "1")
-                    .collect();
-            }
-
-            if co2_scrubber_grid.len() > 1 {
-                co2_scrubber_grid = co2_scrubber_grid
-                    .drain(..)
-                    .filter(|row| row[column_number].to_string() == "0")
-                    .collect();
-            }
         } else {
             gamma_binary_string.push_str("0");
             epsilon_binary_string.push_str("1");
+        }
 
-            if oxygen_generator_grid.len() > 1 {
-                oxygen_generator_grid = oxygen_generator_grid
-                    .drain(..)
-                    .filter(|row| row[column_number].to_string() == "0")
-                    .collect();
-            }
+        // Oxygen generator
+        let oxygen_column_values: Vec<char> = oxygen_generator_grid
+            .iter()
+            .map(|row| row[column_number])
+            .collect();
 
-            if co2_scrubber_grid.len() > 1 {
-                co2_scrubber_grid = co2_scrubber_grid
-                    .drain(..)
-                    .filter(|row| row[column_number].to_string() == "1")
-                    .collect();
-            }
+        let oxygen_num_zero_bits = oxygen_column_values
+            .iter()
+            .filter(|&x| x.to_string() == "0")
+            .count();
+
+        let oxygen_num_one_bits = oxygen_column_values
+            .iter()
+            .filter(|&x| x.to_string() == "1")
+            .count();
+
+        if oxygen_generator_grid.len() > 1 {
+            let most_common_bit = if oxygen_num_one_bits >= oxygen_num_zero_bits {
+                "1"
+            } else {
+                "0"
+            };
+
+            oxygen_generator_grid = oxygen_generator_grid
+                .drain(..)
+                .filter(|row| row[column_number].to_string() == most_common_bit)
+                .collect();
+        }
+
+        // CO2 scrubbing
+        let co2_column_values: Vec<char> = co2_scrubber_grid
+            .iter()
+            .map(|row| row[column_number])
+            .collect();
+
+        let co2_num_zero_bits = co2_column_values
+            .iter()
+            .filter(|&x| x.to_string() == "0")
+            .count();
+
+        let co2_num_one_bits = co2_column_values
+            .iter()
+            .filter(|&x| x.to_string() == "1")
+            .count();
+
+        if co2_scrubber_grid.len() > 1 {
+            let least_common_bit = if co2_num_zero_bits <= co2_num_one_bits {
+                "0"
+            } else {
+                "1"
+            };
+
+            co2_scrubber_grid = co2_scrubber_grid
+                .drain(..)
+                .filter(|row| row[column_number].to_string() == least_common_bit)
+                .collect();
         }
     }
 
