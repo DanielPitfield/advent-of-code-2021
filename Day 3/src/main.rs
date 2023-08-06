@@ -1,19 +1,19 @@
 fn main() {
+    // The lines of the input file
     let rows: Vec<&str> = include_str!("./input.txt").lines().collect();
+    // How many bits are there in the binary strings (all rows have the same number of bits so just look at the first row)?
+    let num_columns: usize = rows[0].len();
+    // Map each row to a vector of the bits/characters
+    let grid: Vec<Vec<char>> = rows.iter().map(|value| value.chars().collect()).collect();
 
-    part1(&rows);
-}
-
-fn part1(rows: &Vec<&str>) {
     // Will hold the most common bit in each column
     let mut gamma_binary_string = String::new();
     // Will hold the least common bit in each column
     let mut epsilon_binary_string = String::new();
 
-    // How many bits are there in the binary strings (all rows have the same number of bits so just look at the first row)?
-    let num_columns = rows[0].len();
-    // Map each row to a vector of the bits/characters
-    let grid: Vec<Vec<char>> = rows.iter().map(|value| value.chars().collect()).collect();
+    // Will hold the rows that meet the bit criteria
+    let mut oxygen_generator_grid = grid.clone();
+    let mut co2_scrubber_grid = grid.clone();
 
     for column_number in 0..(num_columns) {
         // The values/bits for just the currently iterated column
@@ -32,12 +32,36 @@ fn part1(rows: &Vec<&str>) {
             .count();
 
         // More 1 bits than 0 bits?
-        if num_one_bits > num_zero_bits {
+        if num_one_bits >= num_zero_bits {
             gamma_binary_string.push_str("1");
             epsilon_binary_string.push_str("0");
+
+            oxygen_generator_grid = oxygen_generator_grid
+                .clone()
+                .into_iter()
+                .filter(|row| row[column_number].to_string() == "1")
+                .collect();
+
+            co2_scrubber_grid = co2_scrubber_grid
+                .clone()
+                .into_iter()
+                .filter(|row| row[column_number].to_string() == "0")
+                .collect();
         } else {
             gamma_binary_string.push_str("0");
             epsilon_binary_string.push_str("1");
+
+            oxygen_generator_grid = oxygen_generator_grid
+                .clone()
+                .into_iter()
+                .filter(|row| row[column_number].to_string() == "0")
+                .collect();
+
+            co2_scrubber_grid = co2_scrubber_grid
+                .clone()
+                .into_iter()
+                .filter(|row| row[column_number].to_string() == "1")
+                .collect();
         }
     }
 
